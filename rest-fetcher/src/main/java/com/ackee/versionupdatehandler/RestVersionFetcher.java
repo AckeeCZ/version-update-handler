@@ -6,6 +6,7 @@ import com.ackee.versioupdatehandler.model.VersionFetchError;
 import com.ackee.versioupdatehandler.model.VersionsConfiguration;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -15,6 +16,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import rx.Single;
 import rx.functions.Func1;
+
+import static com.ackee.versionupdatehandler.RestVersionFetcher.ApiDescription.api;
 
 /**
  * Class that fetches version configuration from rest api
@@ -26,17 +29,29 @@ import rx.functions.Func1;
  **/
 public class RestVersionFetcher implements VersionFetcher {
     public static final String TAG = RestVersionFetcher.class.getName();
-    private ApiDescription api = null;
 
     interface ApiDescription {
         @GET("app_version")
-        public Single<BasicVersionsConfiguration> getVersions();
+        public Single<JsonObject> getVersions();
     }
 
+    public static final String MINIMAL_VERSION = "minimal_version_android";
+    public static final String CURRENT_VERSION = "current_version_android";
+
+    String minimalAttributeName;
+    String currentAttributeName;
     String baseUrl;
 
+    private ApiDescription api = null;
+
     public RestVersionFetcher(String baseUrl) {
+        this(baseUrl, MINIMAL_VERSION, CURRENT_VERSION);
+    }
+
+    public RestVersionFetcher(String baseUrl, String currentAttributeName, String minimalAttributeName) {
         this.baseUrl = baseUrl;
+        this.currentAttributeName = currentAttributeName;
+        this.minimalAttributeName = minimalAttributeName;
     }
 
     @Override
@@ -44,10 +59,10 @@ public class RestVersionFetcher implements VersionFetcher {
         return getApi()
                 .getVersions()
                 // Single<BasicVersionsConfiguration> is not subtype of Single<VersionsConfiguration> :(
-                .map(new Func1<BasicVersionsConfiguration, VersionsConfiguration>() {
+                .map(new Func1<JsonObject, VersionsConfiguration>() {
                     @Override
-                    public VersionsConfiguration call(BasicVersionsConfiguration basicVersionsConfiguration) {
-                        return basicVersionsConfiguration;
+                    public VersionsConfiguration call(JsonObject json) {
+                        return new BasicVersionsConfiguration(json.get(minimalAttributeName).getAsLong(), json.get(currentAttributeName).getAsLong());
                     }
                 })
                 .onErrorResumeNext(new Func1<Throwable, Single<? extends VersionsConfiguration>>() {

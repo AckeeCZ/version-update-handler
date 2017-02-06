@@ -17,8 +17,6 @@ import retrofit2.http.GET;
 import rx.Single;
 import rx.functions.Func1;
 
-import static com.ackee.versionupdatehandler.RestVersionFetcher.ApiDescription.api;
-
 /**
  * Class that fetches version configuration from rest api
  * <p>

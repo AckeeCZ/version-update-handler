@@ -1,0 +1,1 @@
+include ':app', ':library', ':firebase-fetcher', ':rest-fetcher'

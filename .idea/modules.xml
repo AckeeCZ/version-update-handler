@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/VersionUpdateHandler.iml" filepath="$PROJECT_DIR$/VersionUpdateHandler.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/firebase-fetcher/firebase-fetcher.iml" filepath="$PROJECT_DIR$/firebase-fetcher/firebase-fetcher.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rest-fetcher/rest-fetcher.iml" filepath="$PROJECT_DIR$/rest-fetcher/rest-fetcher.iml" />
+    </modules>
+  </component>
+</project>

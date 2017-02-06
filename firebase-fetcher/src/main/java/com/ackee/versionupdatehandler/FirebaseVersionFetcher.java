@@ -27,13 +27,21 @@ public class FirebaseVersionFetcher implements VersionFetcher {
     public static final String CURRENT_VERSION = "current_version_android";
 
     private int cacheExpiration;
+    String minimalAttributeName;
+    String currentAttributeName;
 
     public FirebaseVersionFetcher() {
         this(3600);
     }
 
     public FirebaseVersionFetcher(int cacheExpiration) {
+        this(cacheExpiration, MINIMAL_VERSION, CURRENT_VERSION);
+    }
+
+    public FirebaseVersionFetcher(int cacheExpiration, String minimalAttributeName, String currentAttributeName) {
         this.cacheExpiration = cacheExpiration;
+        this.minimalAttributeName = minimalAttributeName;
+        this.currentAttributeName = currentAttributeName;
     }
 
     @Override
@@ -53,8 +61,8 @@ public class FirebaseVersionFetcher implements VersionFetcher {
                             Log.d("FirebaseVersionFetcher", "onComplete: failed");
                             singleSubscriber.onError(new VersionFetchError());
                         }
-                        long minimalVersion = FirebaseRemoteConfig.getInstance().getLong(MINIMAL_VERSION);
-                        long currentVersion = FirebaseRemoteConfig.getInstance().getLong(CURRENT_VERSION);
+                        long minimalVersion = FirebaseRemoteConfig.getInstance().getLong(minimalAttributeName);
+                        long currentVersion = FirebaseRemoteConfig.getInstance().getLong(currentAttributeName);
 
                         singleSubscriber.onSuccess(new BasicVersionsConfiguration(minimalVersion, currentVersion));
                     }

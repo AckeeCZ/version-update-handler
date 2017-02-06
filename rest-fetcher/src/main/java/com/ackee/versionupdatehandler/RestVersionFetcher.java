@@ -29,7 +29,7 @@ public class RestVersionFetcher implements VersionFetcher {
     private ApiDescription api = null;
 
     interface ApiDescription {
-        @GET("/app_version")
+        @GET("app_version")
         public Single<BasicVersionsConfiguration> getVersions();
     }
 
@@ -41,7 +41,8 @@ public class RestVersionFetcher implements VersionFetcher {
 
     @Override
     public Single<VersionsConfiguration> fetch() {
-        return getApi().getVersions()
+        return getApi()
+                .getVersions()
                 // Single<BasicVersionsConfiguration> is not subtype of Single<VersionsConfiguration> :(
                 .map(new Func1<BasicVersionsConfiguration, VersionsConfiguration>() {
                     @Override

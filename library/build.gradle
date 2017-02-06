@@ -13,6 +13,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -25,4 +28,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'io.reactivex:rxjava:1.2.5'
     compile 'io.reactivex:rxandroid:0.24.0'
+    testCompile 'com.android.support.test:runner:0.5'
 }

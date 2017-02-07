@@ -30,6 +30,10 @@ android {
     }
 }
 
+ext {
+    ankoVersion = "0.9"
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -37,4 +41,12 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // Anko
+    compile "org.jetbrains.anko:anko-sdk15:$ankoVersion" // So here it's 15 too
+
+    // Anko libs matching support libs
+    compile "org.jetbrains.anko:anko-appcompat-v7:${ankoVersion}"
+
+    compile project(":library")
 }

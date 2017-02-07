@@ -1,16 +1,9 @@
 package com.ackee.versioupdatehandler;
 
-import android.app.Dialog;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
+import com.ackee.versioupdatehandler.model.DialogSettings;
 import com.ackee.versioupdatehandler.model.VersionStatus;
 import com.ackee.versioupdatehandler.model.VersionsConfiguration;
 
@@ -59,7 +52,23 @@ public class VersionStatusResolver {
         return status;
     }
 
+    /**
+     * Check for version and show dialog with default settings
+     *
+     * @param version         current version
+     * @param fragmentManager fragment manager used for showing dialog fragment
+     */
     public void checkVersionStatusAndOpenDefault(final int version, final FragmentManager fragmentManager) {
+        checkVersionStatusAndOpenDefault(version, fragmentManager, new DialogSettings.Builder().build());
+    }
+
+    /**
+     * Check for version and show dialog with customized visual settings via {@link DialogSettings}
+     *
+     * @param version         current version
+     * @param fragmentManager fragment manager used for showing dialog fragment
+     */
+    public void checkVersionStatusAndOpenDefault(final int version, final FragmentManager fragmentManager, final DialogSettings settings) {
         checkVersionStatus(version)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -67,7 +76,7 @@ public class VersionStatusResolver {
                     @Override
                     public void call(VersionStatus versionStatus) {
                         if (versionStatus != VersionStatus.UP_TO_DATE) {
-                            showDialog(versionStatus == VersionStatus.UPDATE_REQUIRED, fragmentManager);
+                            showDialog(versionStatus == VersionStatus.UPDATE_REQUIRED, fragmentManager, settings);
                         }
                     }
                 }, new Action1<Throwable>() {
@@ -83,53 +92,8 @@ public class VersionStatusResolver {
      *
      * @param forceUpdate indicator if update is mandatory
      */
-    private void showDialog(boolean forceUpdate, FragmentManager fragmentManager) {
-        UpdateDialog.newInstance(forceUpdate).show(fragmentManager, UpdateDialog.class.getName());
-    }
-
-    public static class UpdateDialog extends DialogFragment {
-
-        private static final String FORCE_UPDATE_KEY = "force_update";
-
-        public static UpdateDialog newInstance(boolean forceUpdate) {
-            Bundle args = new Bundle();
-            args.putBoolean(FORCE_UPDATE_KEY, forceUpdate);
-            UpdateDialog updateDialog = new UpdateDialog();
-            updateDialog.setArguments(args);
-            return updateDialog;
-        }
-
-        @NonNull
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle("Update app");
-            builder.setMessage("Your application is outdated. Please update to the newest version");
-            final boolean isForceUpdate = getArguments().getBoolean(FORCE_UPDATE_KEY, false);
-            builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (isForceUpdate) {
-                        getActivity().finish();
-                    }
-                    final String appPackageName = getActivity().getPackageName(); // getPackageName() from Context or Activity object
-                    try {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
-                    } catch (android.content.ActivityNotFoundException anfe) {
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName)));
-                    }
-                }
-            });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    if (isForceUpdate) {
-                        getActivity().moveTaskToBack(true);
-                    }
-                }
-            });
-            return builder.create();
-        }
+    private void showDialog(boolean forceUpdate, FragmentManager fragmentManager, DialogSettings dialogSettings) {
+        UpdateDialog.newInstance(forceUpdate, dialogSettings).show(fragmentManager, UpdateDialog.class.getName());
     }
 
 }

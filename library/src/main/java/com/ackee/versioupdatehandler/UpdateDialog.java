@@ -41,6 +41,11 @@ public class UpdateDialog extends DialogFragment {
         if (settings == null) {
             throw new IllegalArgumentException("Dialog settings cannot be null");
         }
+        final boolean isForceUpdate = getArguments().getBoolean(FORCE_UPDATE_KEY, false);
+        if(isForceUpdate) {
+            setCancelable(false);
+            builder.setCancelable(false);
+        }
         String title = "Update app";
         if (settings.getTitle() != null) {
             title = settings.getTitle();
@@ -57,7 +62,6 @@ public class UpdateDialog extends DialogFragment {
             message = getString(settings.getMessageRes());
         }
         builder.setMessage(message);
-        final boolean isForceUpdate = getArguments().getBoolean(FORCE_UPDATE_KEY, false);
 
         String posButton = "Update";
         if (settings.getPositiveButton() != null) {

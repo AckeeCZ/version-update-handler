@@ -1,25 +1,38 @@
 # Android Version Status Resolver and Fetcher
 
 ## Purpose of library
-Many applications have need to tell users to update current application because they have outdated version. Google Play doesnt support any API for that so we need to use custom solution - even some api request or service like Firebase Remote Configuration.
+Many applications have need to tell users to update current application because they have outdated version. Google Play doesnt support any API for that so we need to use custom solution.  This library will compare current application version number to the versions that are stored in remote locations (Api request/Firebase Remote Config, ...) and show dialog to user with prompt to update his app.
 
 ## Usage
 The simplest way for use this library is
 ```java
  val versionFetcher = ...
- val versionHandler = new VersionHandler(versionFetcher)
- versionHandler.checkVersionStatusAndShowDefault(BuildConfig.VERSION_CODE, getSupportFragmentManager())
+ val versionResolver = new VersionStatusResolver(versionFetcher)
+ versionResolver.checkVersionStatusAndShowDefault(BuildConfig.VERSION_CODE, getSupportFragmentManager())
 ```
 
-this will check versions and show update dialog with the right settings.
+this will check versions and show update dialog with default texts. If you want to modify strings in dialog and maybe package name, you can via DialogSettings.Builder() class.
 
-If you want to show custom UI with update info, you can use different method:
+```java
+ val versionFetcher = ...
+ val versionResolver = new VersionStatusResolver(versionFetcher)
+ versionResolver.checkVersionStatusAndShowDefault(BuildConfig.VERSION_CODE, getSupportFragmentManager(),
+                            DialogSettings.Builder()
+                            .title("My custom title")
+                            .messageRes(R.string.update_dialog_message)
+                            .positiveButton("Yaay")
+                            .negativeButton("Never")
+                            .build())
+```
+
+
+If you want to show UI that built in dialog cant handle, you can use different method and based on result show particular UI:
 
 ```java
 val versionFetcher = ...
-val versionHandler = new VersionHandler(versionFetcher)
+val versionResolver = new VersionStatusResolver(versionFetcher)
 
-versionHandler.checkVersionStatus(BuildConfig.VERSION_CODE)
+versionResolver.checkVersionStatus(BuildConfig.VERSION_CODE)
     .subscribe({ status ->
         if(status == UP_TO_DATE) {
             // app is up to date
@@ -51,7 +64,7 @@ Class `RestVersionFetcher` accepts as argument base url of server. On url GET ${
 compile "cz.ackee.versionfetcher:rest-fetcher:x.x.x"
 ```
 ## Dependencies
-
+For current version check `gradle.properties` file
 ```groovy
 compile "cz.ackee.versionfetcher:status-resolver:x.x.x"
 ```

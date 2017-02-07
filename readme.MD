@@ -45,7 +45,7 @@ versionResolver.checkVersionStatus(BuildConfig.VERSION_CODE)
         })
 
 ```
-VersionHandler class takes responsibility for deciding status of update based on fetched version info and current application version. It returns `Single<VersionStatus>`
+VersionStatusResolver class takes responsibility for deciding status of update based on fetched version info and current application version. It returns `Single<VersionStatus>`
 
 Interface VersionFetcher should be used for actual fetching of version configurations.
 

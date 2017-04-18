@@ -3,6 +3,8 @@
 ## Purpose of library
 Many applications have need to tell users to update current application because they have outdated version. Google Play doesnt support any API for that so we need to use custom solution.  This library will compare current application version number to the versions that are stored in remote locations (Api request/Firebase Remote Config, ...) and show dialog to user with prompt to update his app.
 
+
+This library is based on RxJava2
 ## Usage
 The simplest way for use this library is
 ```java
@@ -54,19 +56,19 @@ Two basic implementation are provided in separate modules - Firebase Remote Conf
 ### Firebase Remote Config
 Class `FirebaseVersionFetcher` takes optional argument for cache expiration of fetched data from Firebase Remote Config. Default names of attributes are `minimal_version_android` and `current_version_android` but you can modify that with constructor attributes.
 ```groovy
-compile "cz.ackee.updatechecker:firebase-fetcher:x.x.x"
+compile "cz.ackee.updatechecker:firebase-fetcher2:x.x.x"
 ```
 
 
 ### Rest Api
 Class `RestVersionFetcher` accepts as argument base url of server. On url GET ${baseUrl}/app-version is expected response with attributes  `minimal_version_android` and `current_version_android` (names can be also modified)
 ```groovy
-compile "cz.ackee.updatechecker:rest-fetcher:x.x.x"
+compile "cz.ackee.updatechecker:rest-fetcher2:x.x.x"
 ```
 ## Dependencies
 For current version check `gradle.properties` file
 ```groovy
-compile "cz.ackee.updatechecker:status-resolver:x.x.x"
+compile "cz.ackee.updatechecker:status-resolver2:x.x.x"
 ```
 
 

@@ -11,8 +11,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
-import rx.Single;
-import rx.SingleSubscriber;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
+
 
 /**
  * Class that fetches version configuration from Firebase Remote.
@@ -46,25 +48,24 @@ public class FirebaseVersionFetcher implements VersionFetcher {
 
     @Override
     public Single<VersionsConfiguration> fetch() {
-        return Single.create(new Single.OnSubscribe<VersionsConfiguration>() {
+        return Single.create(new SingleOnSubscribe<VersionsConfiguration>() {
             @Override
-            public void call(final SingleSubscriber<? super VersionsConfiguration> singleSubscriber) {
+            public void subscribe(final SingleEmitter<VersionsConfiguration> emitter) throws Exception {
                 boolean isDevMode = FirebaseRemoteConfig.getInstance().getInfo().getConfigSettings().isDeveloperModeEnabled();
 
                 FirebaseRemoteConfig.getInstance().fetch(isDevMode ? 0 : cacheExpiration).addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Log.d("FirebaseVersionFetcher", "onComplete: success");
                             FirebaseRemoteConfig.getInstance().activateFetched();
                         } else {
-                            Log.d("FirebaseVersionFetcher", "onComplete: failed");
-                            singleSubscriber.onError(new VersionFetchError());
+
+                            emitter.onError(new VersionFetchError());
                         }
                         long minimalVersion = FirebaseRemoteConfig.getInstance().getLong(minimalAttributeName);
                         long currentVersion = FirebaseRemoteConfig.getInstance().getLong(currentAttributeName);
 
-                        singleSubscriber.onSuccess(new BasicVersionsConfiguration(minimalVersion, currentVersion));
+                        emitter.onSuccess(new BasicVersionsConfiguration(minimalVersion, currentVersion));
                     }
                 });
             }

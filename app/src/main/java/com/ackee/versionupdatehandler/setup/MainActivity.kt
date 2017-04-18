@@ -1,16 +1,14 @@
 package com.ackee.versionupdatehandler.setup
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.widget.Toast
 import com.ackee.versionupdatehandler.R
 import com.ackee.versioupdatehandler.VersionStatusResolver
 import com.ackee.versioupdatehandler.model.BasicVersionsConfiguration
 import com.ackee.versioupdatehandler.model.DialogSettings
 import com.ackee.versioupdatehandler.model.VersionStatus
+import io.reactivex.Single
 import org.jetbrains.anko.*
-import rx.Single
 import java.util.*
 
 /**
@@ -71,12 +69,12 @@ class MainActivity : AppCompatActivity() {
                         VersionStatusResolver({
                             Single.just(BasicVersionsConfiguration(10, 15))
                         }).checkVersionStatus(if (Random().nextInt() % 2 == 0) 8 else 12)
-                                .subscribe {
+                                .subscribe({
                                     when (it) {
                                         VersionStatus.UPDATE_AVAILABLE -> toast("Update is available")
                                         VersionStatus.UPDATE_REQUIRED -> toast("Mandatory update is available")
                                     }
-                                }
+                                }, Throwable::printStackTrace)
                     }
                 }.lparams(width = matchParent) {
                     bottomMargin = dip(16)

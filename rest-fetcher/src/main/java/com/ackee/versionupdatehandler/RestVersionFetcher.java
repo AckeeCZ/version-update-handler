@@ -8,14 +8,14 @@ import com.google.gson.FieldNamingPolicy;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+import io.reactivex.Single;
+import io.reactivex.functions.Function;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
-import rx.Single;
-import rx.functions.Func1;
 
 /**
  * Class that fetches version configuration from rest api
@@ -57,15 +57,15 @@ public class RestVersionFetcher implements VersionFetcher {
         return getApi()
                 .getVersions()
                 // Single<BasicVersionsConfiguration> is not subtype of Single<VersionsConfiguration> :(
-                .map(new Func1<JsonObject, VersionsConfiguration>() {
+                .map(new Function<JsonObject, VersionsConfiguration>() {
                     @Override
-                    public VersionsConfiguration call(JsonObject json) {
+                    public VersionsConfiguration apply(JsonObject json) {
                         return new BasicVersionsConfiguration(json.get(minimalAttributeName).getAsLong(), json.get(currentAttributeName).getAsLong());
                     }
                 })
-                .onErrorResumeNext(new Func1<Throwable, Single<? extends VersionsConfiguration>>() {
+                .onErrorResumeNext(new Function<Throwable, Single<? extends VersionsConfiguration>>() {
                     @Override
-                    public Single<? extends VersionsConfiguration> call(Throwable throwable) {
+                    public Single<? extends VersionsConfiguration> apply(Throwable throwable) {
                         return Single.error(new VersionFetchError());
                     }
                 });
@@ -75,7 +75,7 @@ public class RestVersionFetcher implements VersionFetcher {
         if (api == null) {
             api = new Retrofit.Builder()
                     .baseUrl(baseUrl)
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .addConverterFactory(GsonConverterFactory.create(new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()))
                     .client(new OkHttpClient.Builder()
                             .addNetworkInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))

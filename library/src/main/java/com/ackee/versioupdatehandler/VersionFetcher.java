@@ -2,7 +2,8 @@ package com.ackee.versioupdatehandler;
 
 import com.ackee.versioupdatehandler.model.VersionsConfiguration;
 
-import rx.Single;
+import io.reactivex.Single;
+
 
 /**
  * Base interface for classes that will handle version fetching.

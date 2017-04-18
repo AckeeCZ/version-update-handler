@@ -7,11 +7,11 @@ import com.ackee.versioupdatehandler.model.DialogSettings;
 import com.ackee.versioupdatehandler.model.VersionStatus;
 import com.ackee.versioupdatehandler.model.VersionsConfiguration;
 
-import rx.Single;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -30,9 +30,9 @@ public class VersionStatusResolver {
 
     public Single<VersionStatus> checkVersionStatus(final int version) {
         return fetcher.fetch()
-                .map(new Func1<VersionsConfiguration, VersionStatus>() {
+                .map(new Function<VersionsConfiguration, VersionStatus>() {
                     @Override
-                    public VersionStatus call(VersionsConfiguration versionsConfiguration) {
+                    public VersionStatus apply(VersionsConfiguration versionsConfiguration) {
                         return resolveStatus(version, versionsConfiguration);
                     }
                 });
@@ -72,16 +72,16 @@ public class VersionStatusResolver {
         checkVersionStatus(version)
                 .subscribeOn(Schedulers.newThread())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<VersionStatus>() {
+                .subscribe(new Consumer<VersionStatus>() {
                     @Override
-                    public void call(VersionStatus versionStatus) {
+                    public void accept(VersionStatus versionStatus) {
                         if (versionStatus != VersionStatus.UP_TO_DATE) {
                             showDialog(versionStatus == VersionStatus.UPDATE_REQUIRED, fragmentManager, settings);
                         }
                     }
-                }, new Action1<Throwable>() {
+                }, new Consumer<Throwable>() {
                     @Override
-                    public void call(Throwable throwable) {
+                    public void accept(Throwable throwable) {
                         throwable.printStackTrace();
                     }
                 });

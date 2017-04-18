@@ -8,9 +8,10 @@ import com.ackee.versioupdatehandler.model.VersionsConfiguration;
 
 import org.junit.Test;
 
-import rx.Single;
-import rx.functions.Func1;
-import rx.observers.TestSubscriber;
+import io.reactivex.Single;
+import io.reactivex.functions.Function;
+import io.reactivex.observers.TestObserver;
+
 
 /**
  * Tests for {@link VersionStatusResolver}
@@ -31,12 +32,12 @@ public class VersionStatusResolverTest {
                 return Single.error(new VersionFetchError());
             }
         });
-        TestSubscriber<VersionStatus> testSubscriber = TestSubscriber.create();
+        TestObserver<VersionStatus> testSubscriber = TestObserver.create();
         resolver.checkVersionStatus(0)
                 .subscribe(testSubscriber);
         testSubscriber.assertError(VersionFetchError.class);
         testSubscriber.assertNoValues();
-        testSubscriber.assertTerminalEvent();
+        testSubscriber.assertTerminated();
     }
 
     @Test
@@ -63,18 +64,18 @@ public class VersionStatusResolverTest {
         VersionStatusResolver resolver = new VersionStatusResolver(new VersionFetcher() {
             @Override
             public Single<VersionsConfiguration> fetch() {
-                return Single.just(BASIC_VERSIONS_CONFIGURATION).map(new Func1<BasicVersionsConfiguration, VersionsConfiguration>() {
+                return Single.just(BASIC_VERSIONS_CONFIGURATION).map(new Function<BasicVersionsConfiguration, VersionsConfiguration>() {
                     @Override
-                    public VersionsConfiguration call(BasicVersionsConfiguration basicVersionsConfiguration) {
+                    public VersionsConfiguration apply(BasicVersionsConfiguration basicVersionsConfiguration) {
                         return basicVersionsConfiguration;
                     }
                 });
             }
         });
-        TestSubscriber<VersionStatus> testSubscriber = TestSubscriber.create();
+        TestObserver<VersionStatus> testObserver = TestObserver.create();
         resolver.checkVersionStatus(actualVersion)
-                .subscribe(testSubscriber);
-        testSubscriber.assertValue(expectedResult);
-        testSubscriber.assertNoErrors();
+                .subscribe(testObserver);
+        testObserver.assertValue(expectedResult);
+        testObserver.assertNoErrors();
     }
 }

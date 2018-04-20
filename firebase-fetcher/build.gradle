@@ -23,5 +23,3 @@ dependencies {
     compile 'com.google.firebase:firebase-config:10.0.0'
     compile project(":library")
 }
-
-apply from: rootProject.file('gradle/gradle-mvn-push.gradle')

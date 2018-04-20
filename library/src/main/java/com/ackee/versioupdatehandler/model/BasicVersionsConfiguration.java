@@ -2,9 +2,6 @@ package com.ackee.versioupdatehandler.model;
 
 /**
  * Basic class for versions configuration.
- *
- * @author Georgiy Shur (georgiy.shur@ackee.cz)
- * @since 2/5/2017
  */
 public class BasicVersionsConfiguration implements VersionsConfiguration {
     public static final String TAG = BasicVersionsConfiguration.class.getName();

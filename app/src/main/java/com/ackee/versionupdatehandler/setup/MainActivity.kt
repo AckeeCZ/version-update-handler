@@ -9,19 +9,16 @@ import com.ackee.versioupdatehandler.model.DialogSettings
 import com.ackee.versioupdatehandler.model.VersionStatus
 import io.reactivex.Single
 import org.jetbrains.anko.*
-import java.util.*
+import java.util.Random
 
 /**
  * Activity with samples
-
- * @author David Bilik [david.bilik@ackee.cz]
- * @since 07/02/2017
- **/
+ */
 class MainActivity : AppCompatActivity() {
+
     companion object {
         val TAG: String = MainActivity::class.java.name
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                 padding = dip(16)
                 button {
                     text = "Not mandatory update"
-                    onClick {
+                    setOnClickListener {
                         checkWithVersion(13)
                     }
                 }.lparams(width = matchParent) {
@@ -39,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
                 button {
                     text = "Mandatory update"
-                    onClick {
+                    setOnClickListener {
                         checkWithVersion(8)
                     }
                 }.lparams(width = matchParent) {
@@ -48,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
                 button {
                     text = "Customized dialog"
-                    onClick {
+                    setOnClickListener {
                         VersionStatusResolver({
                             Single.just(BasicVersionsConfiguration(10, 15))
                         }).checkVersionStatusAndOpenDefault(8, supportFragmentManager, DialogSettings.Builder()
@@ -65,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
                 button {
                     text = "Custom UI"
-                    onClick {
+                    setOnClickListener {
                         VersionStatusResolver({
                             Single.just(BasicVersionsConfiguration(10, 15))
                         }).checkVersionStatus(if (Random().nextInt() % 2 == 0) 8 else 12)

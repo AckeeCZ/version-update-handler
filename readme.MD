@@ -9,7 +9,7 @@ This library is based on RxJava2
 The simplest way for use this library is
 ```kotlin
  val versionFetcher = ...
- val versionResolver = new VersionStatusResolver(versionFetcher)
+ val versionResolver = VersionStatusResolver(versionFetcher)
  versionResolver.checkVersionStatusAndShowDefault(BuildConfig.VERSION_CODE, getSupportFragmentManager())
 ```
 
@@ -17,7 +17,7 @@ this will check versions and show update dialog with default texts. If you want 
 
 ```kotlin
  val versionFetcher = ...
- val versionResolver = new VersionStatusResolver(versionFetcher)
+ val versionResolver = VersionStatusResolver(versionFetcher)
  versionResolver.checkVersionStatusAndShowDefault(BuildConfig.VERSION_CODE, getSupportFragmentManager(),
                             DialogSettings.Builder()
                             .title("My custom title")
@@ -32,7 +32,7 @@ If you want to show UI that built-in dialog cannot handle, you can use different
 
 ```kotlin
 val versionFetcher = ...
-val versionResolver = new VersionStatusResolver(versionFetcher)
+val versionResolver = VersionStatusResolver(versionFetcher)
 
 versionResolver.checkVersionStatus(BuildConfig.VERSION_CODE)
     .subscribe({ status ->

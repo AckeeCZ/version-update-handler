@@ -15,9 +15,6 @@ import com.ackee.versioupdatehandler.model.DialogSettings;
  * Dialog indicating that user should update application.
  * <p>
  * Texts and package name are customizable via {@link DialogSettings} class
- *
- * @author David Bilik [david.bilik@ackee.cz]
- * @since 07/02/2017
  **/
 public class UpdateDialog extends DialogFragment {
 

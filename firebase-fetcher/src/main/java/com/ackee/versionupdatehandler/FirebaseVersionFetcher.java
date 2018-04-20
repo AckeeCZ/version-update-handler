@@ -1,7 +1,6 @@
 package com.ackee.versionupdatehandler;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import com.ackee.versioupdatehandler.VersionFetcher;
 import com.ackee.versioupdatehandler.model.BasicVersionsConfiguration;
@@ -15,14 +14,11 @@ import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
 
-
 /**
  * Class that fetches version configuration from Firebase Remote.
- *
- * @author Georgiy Shur (georgiy.shur@ackee.cz)
- * @since 2/5/2017
  */
 public class FirebaseVersionFetcher implements VersionFetcher {
+
     public static final String TAG = FirebaseVersionFetcher.class.getName();
 
     public static final String MINIMAL_VERSION = "minimal_version_android";

@@ -5,10 +5,7 @@ import android.os.Parcelable;
 
 /**
  * Visual settings of dialog
- *
- * @author David Bilik [david.bilik@ackee.cz]
- * @since 07/02/2017
- **/
+ */
 public class DialogSettings implements Parcelable {
     public static final String TAG = DialogSettings.class.getName();
     String packageName;

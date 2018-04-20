@@ -16,9 +16,6 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * Class that contains the version comparing and update handling logic.
- *
- * @author Georgiy Shur (georgiy.shur@ackee.cz)
- * @since 2/5/2017
  */
 public class VersionStatusResolver {
     public static final String TAG = VersionStatusResolver.class.getName();

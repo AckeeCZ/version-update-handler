@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 27
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         applicationId "com.ackee.versionupdatehandler"
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -31,22 +31,23 @@ android {
 }
 
 ext {
-    ankoVersion = "0.9"
+    ankoVersion = "0.10.4"
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    testCompile 'junit:junit:4.12'
-    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    testImplementation 'junit:junit:4.12'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
     // Anko
-    compile "org.jetbrains.anko:anko-sdk15:$ankoVersion" // So here it's 15 too
+    implementation "org.jetbrains.anko:anko-sdk15:$ankoVersion" // So here it's 15 too
 
     // Anko libs matching support libs
-    compile "org.jetbrains.anko:anko-appcompat-v7:${ankoVersion}"
+    implementation "org.jetbrains.anko:anko-appcompat-v7:${ankoVersion}"
 
-    compile project(":library")
+    implementation project(":library")
 }

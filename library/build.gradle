@@ -29,5 +29,31 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.1.1'
     compile 'io.reactivex.rxjava2:rxjava:2.0.1'
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-
 }
+
+ext {
+    bintrayRepo = 'version-update-handler'
+    bintrayName = 'status-resolver'
+    bintrayOrganisation = 'ackeecz'
+
+    publishedGroupId = 'cz.ackee.updatechecker'
+    publishedArtifactId = 'status-resolver'
+
+    libraryName = 'Version Status Resolver'
+    libraryDescription = 'Compares current application version number to the versions that are stored in remote locations and show the dialog to the user with prompt to update their app'
+    libraryVersion = '1.0.1'
+
+    siteUrl = 'https://github.com/AckeeCZ/version-update-handler'
+    gitUrl = 'https://github.com/AckeeCZ/version-update-handler.git'
+
+    developerId = 'ackee'
+    developerName = 'Ackee'
+    developerEmail = 'info@ackee.cz'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+apply from: rootProject.file('gradle/bintray/install.gradle')
+apply from: rootProject.file('gradle/bintray/bintray.gradle')

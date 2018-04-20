@@ -30,3 +30,30 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile project(":library")
 }
+
+ext {
+    bintrayRepo = 'version-update-handler'
+    bintrayName = 'rest-fetcher'
+    bintrayOrganisation = 'ackeecz'
+
+    publishedGroupId = 'cz.ackee.updatechecker'
+    publishedArtifactId = 'rest-fetcher'
+
+    libraryName = 'Rest Fetcher'
+    libraryDescription = 'Fetches current version information from remote API'
+    libraryVersion = '1.0.1'
+
+    siteUrl = 'https://github.com/AckeeCZ/version-update-handler'
+    gitUrl = 'https://github.com/AckeeCZ/version-update-handler.git'
+
+    developerId = 'ackee'
+    developerName = 'Ackee'
+    developerEmail = 'info@ackee.cz'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+apply from: rootProject.file('gradle/bintray/install.gradle')
+apply from: rootProject.file('gradle/bintray/bintray.gradle')

@@ -23,3 +23,30 @@ dependencies {
     compile 'com.google.firebase:firebase-config:10.0.0'
     compile project(":library")
 }
+
+ext {
+    bintrayRepo = 'version-update-handler'
+    bintrayName = 'firebase-fetcher'
+    bintrayOrganisation = 'ackeecz'
+
+    publishedGroupId = 'cz.ackee.updatechecker'
+    publishedArtifactId = 'firebase-fetcher'
+
+    libraryName = 'Firebase Fetcher'
+    libraryDescription = 'Fetches current version information from Firebase Remote Config'
+    libraryVersion = '1.0.1'
+
+    siteUrl = 'https://github.com/AckeeCZ/version-update-handler'
+    gitUrl = 'https://github.com/AckeeCZ/version-update-handler.git'
+
+    developerId = 'ackee'
+    developerName = 'Ackee'
+    developerEmail = 'info@ackee.cz'
+
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+apply from: rootProject.file('gradle/bintray/install.gradle')
+apply from: rootProject.file('gradle/bintray/bintray.gradle')

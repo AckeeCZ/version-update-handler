@@ -1,6 +1,6 @@
 apply plugin: 'com.jfrog.bintray'
 
-version = libraryVersion
+version = project.property("VERSION_NAME")
 
 if (project.hasProperty("android")) { // Android libraries
     task sourcesJar(type: Jar) {
@@ -40,18 +40,18 @@ bintray {
 
     configurations = ['archives']
     pkg {
-        repo = bintrayRepo
         name = bintrayName
-        userOrg = bintrayOrganisation
+        repo = project.property("BINTRAY_REPO")
+        userOrg = project.property("BINTRAY_ORGANISATION")
         desc = libraryDescription
-        websiteUrl = siteUrl
-        vcsUrl = gitUrl
-        licenses = allLicenses
+        websiteUrl = project.property("SITE_URL")
+        vcsUrl = project.property("GIT_URL")
+        licenses = ["Apache-2.0"]
         publish = true
         publicDownloadNumbers = true
         version {
             desc = libraryDescription
-            name = libraryVersion
+            name = project.property("VERSION_NAME")
             released = new Date()
 
             gpg {

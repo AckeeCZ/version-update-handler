@@ -10,8 +10,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/firebase-fetcher" />
-            <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/rest-fetcher" />
+            <option value="$PROJECT_DIR$/status-resolver" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

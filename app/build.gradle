@@ -49,5 +49,5 @@ dependencies {
     // Anko libs matching support libs
     implementation "org.jetbrains.anko:anko-appcompat-v7:${ankoVersion}"
 
-    implementation project(":library")
+    implementation project(':status-resolver')
 }

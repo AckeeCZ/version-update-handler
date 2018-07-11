@@ -1,1 +1,1 @@
-include ':app', ':library', ':firebase-fetcher', ':rest-fetcher'
+include ':app', ':status-resolver', ':firebase-fetcher', ':rest-fetcher'

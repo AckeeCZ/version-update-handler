@@ -55,13 +55,15 @@ public class FirebaseVersionFetcher implements VersionFetcher {
                         if (task.isSuccessful()) {
                             FirebaseRemoteConfig.getInstance().activateFetched();
                         } else {
-
-                            emitter.onError(new VersionFetchError());
+                            if (!emitter.isDisposed()) {
+                                emitter.onError(new VersionFetchError());
+                            }
                         }
                         long minimalVersion = FirebaseRemoteConfig.getInstance().getLong(minimalAttributeName);
                         long currentVersion = FirebaseRemoteConfig.getInstance().getLong(currentAttributeName);
-
-                        emitter.onSuccess(new BasicVersionsConfiguration(minimalVersion, currentVersion));
+                        if (!emitter.isDisposed()) {
+                            emitter.onSuccess(new BasicVersionsConfiguration(minimalVersion, currentVersion));
+                        }
                     }
                 });
             }

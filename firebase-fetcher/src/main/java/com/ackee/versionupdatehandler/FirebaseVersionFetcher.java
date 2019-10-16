@@ -1,7 +1,5 @@
 package com.ackee.versionupdatehandler;
 
-import android.support.annotation.NonNull;
-
 import com.ackee.versioupdatehandler.VersionFetcher;
 import com.ackee.versioupdatehandler.model.BasicVersionsConfiguration;
 import com.ackee.versioupdatehandler.model.VersionFetchError;
@@ -10,6 +8,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
 
+import androidx.annotation.NonNull;
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
@@ -18,8 +17,6 @@ import io.reactivex.SingleOnSubscribe;
  * Class that fetches version configuration from Firebase Remote.
  */
 public class FirebaseVersionFetcher implements VersionFetcher {
-
-    public static final String TAG = FirebaseVersionFetcher.class.getName();
 
     public static final String MINIMAL_VERSION = "minimal_version_android";
     public static final String CURRENT_VERSION = "current_version_android";

@@ -1,16 +1,15 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 27
+        targetSdkVersion 29
         versionCode properties['VERSION_CODE']
         versionName properties['VERSION_NAME']
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
     testOptions {
@@ -26,9 +25,9 @@ android {
 
 dependencies {
     testImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    api 'io.reactivex.rxjava2:rxjava:2.1.12'
-    api 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    api 'io.reactivex.rxjava2:rxjava:2.2.6'
+    api 'io.reactivex.rxjava2:rxandroid:2.1.0'
 }
 
 ext {

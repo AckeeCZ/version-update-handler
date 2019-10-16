@@ -1,12 +1,11 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 27
+        targetSdkVersion 29
         versionCode properties['VERSION_CODE']
         versionName properties['VERSION_NAME']
     }
@@ -20,8 +19,8 @@ android {
 
 dependencies {
     testImplementation 'junit:junit:4.12'
-    implementation 'com.google.firebase:firebase-config:15.0.0'
-    compileOnly project(':status-resolver')
+    implementation 'com.google.firebase:firebase-config:19.0.3'
+    implementation project(':status-resolver')
 }
 
 ext {

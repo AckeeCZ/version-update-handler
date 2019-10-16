@@ -1,16 +1,15 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 29
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 27
+        targetSdkVersion 29
         versionCode properties['VERSION_CODE']
         versionName properties['VERSION_NAME']
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
     buildTypes {
@@ -22,13 +21,14 @@ android {
 }
 
 dependencies {
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation project(':status-resolver')
+
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation "com.squareup.retrofit2:adapter-rxjava2:2.4.0"
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation "com.squareup.retrofit2:adapter-rxjava2:2.5.0"
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
 
     testImplementation 'junit:junit:4.12'
-    compileOnly project(':status-resolver')
 }
 
 ext {

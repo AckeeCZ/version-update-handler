@@ -1,6 +1,6 @@
 package com.ackee.versioupdatehandler;
 
-import android.support.v4.app.FragmentManager;
+import androidx.fragment.app.FragmentManager;
 import android.util.Log;
 
 import com.ackee.versioupdatehandler.model.DialogSettings;

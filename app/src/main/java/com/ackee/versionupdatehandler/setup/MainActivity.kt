@@ -1,7 +1,7 @@
 package com.ackee.versionupdatehandler.setup
 
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.ackee.versionupdatehandler.R
 import com.ackee.versioupdatehandler.VersionStatusResolver
 import com.ackee.versioupdatehandler.model.BasicVersionsConfiguration
@@ -15,10 +15,6 @@ import java.util.Random
  * Activity with samples
  */
 class MainActivity : AppCompatActivity() {
-
-    companion object {
-        val TAG: String = MainActivity::class.java.name
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

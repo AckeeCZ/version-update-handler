@@ -48,24 +48,33 @@ class UpdateDialog : DialogFragment() {
         return builder.create()
     }
 
-    private fun setupNegativeButton(settings: DialogSettings, builder: AlertDialog.Builder,
-        isForceUpdate: Boolean) {
-        var negButton: String? = "Cancel"
-        if (settings.negativeButton != null) {
-            negButton = settings.negativeButton
+    private fun setupTitle(settings: DialogSettings, builder: AlertDialog.Builder) {
+        var title: String? = "Update app"
+        if (settings.title != null) {
+            title = settings.title
         }
-        if (settings.negativeButtonRes > 0) {
-            negButton = getString(settings.negativeButtonRes)
+        if (settings.titleRes > 0) {
+            title = getString(settings.titleRes)
         }
-        builder.setNegativeButton(negButton) { _, _ ->
-            if (isForceUpdate) {
-                requireActivity().moveTaskToBack(true)
-            }
-        }
+        builder.setTitle(title)
     }
 
-    private fun setupPositiveButton(settings: DialogSettings, builder: AlertDialog.Builder,
-        isForceUpdate: Boolean) {
+    private fun setupMessage(settings: DialogSettings, builder: AlertDialog.Builder) {
+        var message: String? = "Your application is outdated. Please update to the newest version"
+        if (settings.message != null) {
+            message = settings.message
+        }
+        if (settings.messageRes > 0) {
+            message = getString(settings.messageRes)
+        }
+        builder.setMessage(message)
+    }
+
+    private fun setupPositiveButton(
+        settings: DialogSettings,
+        builder: AlertDialog.Builder,
+        isForceUpdate: Boolean
+    ) {
         var posButton: String? = "Update"
         if (settings.positiveButton != null) {
             posButton = settings.positiveButton
@@ -83,26 +92,23 @@ class UpdateDialog : DialogFragment() {
         }
     }
 
-    private fun setupMessage(settings: DialogSettings, builder: AlertDialog.Builder) {
-        var message: String? = "Your application is outdated. Please update to the newest version"
-        if (settings.message != null) {
-            message = settings.message
+    private fun setupNegativeButton(
+        settings: DialogSettings,
+        builder: AlertDialog.Builder,
+        isForceUpdate: Boolean
+    ) {
+        var negButton: String? = "Cancel"
+        if (settings.negativeButton != null) {
+            negButton = settings.negativeButton
         }
-        if (settings.messageRes > 0) {
-            message = getString(settings.messageRes)
+        if (settings.negativeButtonRes > 0) {
+            negButton = getString(settings.negativeButtonRes)
         }
-        builder.setMessage(message)
-    }
-
-    private fun setupTitle(settings: DialogSettings, builder: AlertDialog.Builder) {
-        var title: String? = "Update app"
-        if (settings.title != null) {
-            title = settings.title
+        builder.setNegativeButton(negButton) { _, _ ->
+            if (isForceUpdate) {
+                requireActivity().moveTaskToBack(true)
+            }
         }
-        if (settings.titleRes > 0) {
-            title = getString(settings.titleRes)
-        }
-        builder.setTitle(title)
     }
 
     /**

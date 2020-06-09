@@ -32,7 +32,7 @@ class VersionStatusResolver(private val fetcher: VersionFetcher) {
     suspend fun checkVersionStatusAndOpenDialog(
         version: Int,
         fragmentManager: FragmentManager,
-        settings: DialogSettings = DialogSettings.Builder().build()
+        settings: DialogSettings = DialogSettings()
     ) {
         val versionStatus = checkVersionStatus(version)
         if (versionStatus != VersionStatus.UP_TO_DATE) {

@@ -8,13 +8,13 @@ import kotlinx.android.parcel.Parcelize
  */
 @Parcelize
 class DialogSettings(
-    val packageName: String?,
-    val title: String?,
-    val titleRes: Int,
-    val message: String?,
-    val messageRes: Int,
-    val positiveButton: String?,
-    val positiveButtonRes: Int,
-    val negativeButton: String?,
-    val negativeButtonRes: Int
+    val packageName: String? = null,
+    val title: String? = null,
+    val titleRes: Int = -1,
+    val message: String? = null,
+    val messageRes: Int = -1,
+    val positiveButton: String? = null,
+    val positiveButtonRes: Int = -1,
+    val negativeButton: String? = null,
+    val negativeButtonRes: Int = -1
 ) : Parcelable

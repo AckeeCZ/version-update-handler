@@ -46,13 +46,12 @@ class MainActivity : AppCompatActivity() {
                 button {
                     text = "Customized dialog"
                     onClick {
-                        getDefaultStatusResolver().checkVersionStatusAndOpenDialog(8, supportFragmentManager, DialogSettings.Builder()
-                            .title("My custom title")
-                            .messageRes(R.string.update_dialog_message)
-                            .positiveButton("Yaay")
-                            .negativeButton("Never")
-                            .build()
-                        )
+                        getDefaultStatusResolver().checkVersionStatusAndOpenDialog(8, supportFragmentManager, DialogSettings(
+                            title = "My custom title",
+                            messageRes = R.string.update_dialog_message,
+                            positiveButton = "Yaay",
+                            negativeButton = "Never"
+                        ))
                     }
                 }.lparams(width = matchParent) {
                     bottomMargin = dip(16)
@@ -79,10 +78,10 @@ class MainActivity : AppCompatActivity() {
         getDefaultStatusResolver().checkVersionStatusAndOpenDialog(version, supportFragmentManager)
     }
 
-    private fun getDefaultStatusResolver(minimalVersion: Int = 10, currentVersion: Int = 15): VersionStatusResolver {
+    private fun getDefaultStatusResolver(minimalVersion: Long = 10, currentVersion: Long = 15): VersionStatusResolver {
         return VersionStatusResolver(object : VersionFetcher {
             override suspend fun fetch(): VersionsConfiguration {
-                return BasicVersionsConfiguration(10, 15)
+                return BasicVersionsConfiguration(minimalVersion, currentVersion)
             }
         })
     }

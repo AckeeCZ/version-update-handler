@@ -23,9 +23,6 @@ class VersionStatusResolver(private val fetcher: VersionFetcher) {
         } else if (version < configuration.currentVersion()) {
             status = VersionStatus.UPDATE_AVAILABLE
         }
-        Log.d("VersionStatusResolver", "Resolving version status... App version:" + version +
-            " minimal version: " + configuration.minimalVersion() +
-            " current version: " + configuration.minimalVersion() + " Status resolved:  " + status)
         return status
     }
     /**

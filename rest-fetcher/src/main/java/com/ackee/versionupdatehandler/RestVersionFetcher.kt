@@ -34,19 +34,15 @@ class RestVersionFetcher(
         suspend fun versions(): JsonObject?
     }
 
-    private var api: ApiDescription? = null
-        get() {
-            if (field == null) {
-                field = Retrofit.Builder()
-                    .baseUrl(baseUrl)
-                    .addConverterFactory(
-                        GsonConverterFactory.create(GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()))
-                    .client(OkHttpClient.Builder().build())
-                    .build()
-                    .create(ApiDescription::class.java)
-            }
-            return field
-        }
+    private val api: ApiDescription? by lazy {
+        Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .addConverterFactory(
+                GsonConverterFactory.create(GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()))
+            .client(OkHttpClient.Builder().build())
+            .build()
+            .create(ApiDescription::class.java)
+    }
 
     override suspend fun fetch(): VersionsConfiguration {
         return api?.versions()?.map() ?: DefaultVersionsConfiguration

@@ -24,10 +24,6 @@ android {
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
 ext {
     kotlin_coroutines_version = "1.3.7"
 }

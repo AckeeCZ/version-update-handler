@@ -25,10 +25,11 @@ class VersionStatusResolver(private val fetcher: VersionFetcher) {
         }
         return status
     }
+
     /**
      * Check for version and show dialog with visual settings defined within [DialogSettings]
      */
-    suspend fun checkVersionStatusAndOpenDefault(
+    suspend fun checkVersionStatusAndOpenDialog(
         version: Int,
         fragmentManager: FragmentManager,
         settings: DialogSettings = DialogSettings.Builder().build()

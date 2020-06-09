@@ -12,7 +12,7 @@ The simplest way for use this library is
 ```kotlin
  val versionFetcher = ...
  val versionResolver = VersionStatusResolver(versionFetcher)
- versionResolver.checkVersionStatusAndOpenDefault(BuildConfig.VERSION_CODE, getSupportFragmentManager())
+ versionResolver.checkVersionStatusAndOpenDialog(BuildConfig.VERSION_CODE, getSupportFragmentManager())
 ```
 
 this will check versions and show update dialog with default texts. If you want to modify strings in dialog and maybe package name, you can via DialogSettings.Builder() class.
@@ -20,7 +20,7 @@ this will check versions and show update dialog with default texts. If you want 
 ```kotlin
  val versionFetcher = ...
  val versionResolver = VersionStatusResolver(versionFetcher)
- versionResolver.checkVersionStatusAndOpenDefault(BuildConfig.VERSION_CODE, getSupportFragmentManager(),
+ versionResolver.checkVersionStatusAndOpenDialog(BuildConfig.VERSION_CODE, getSupportFragmentManager(),
                             DialogSettings.Builder()
                             .title("My custom title")
                             .messageRes(R.string.update_dialog_message)

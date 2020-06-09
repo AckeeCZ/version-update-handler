@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
                 button {
                     text = "Customized dialog"
                     onClick {
-                        getDefaultStatusResolver().checkVersionStatusAndOpenDefault(8, supportFragmentManager, DialogSettings.Builder()
+                        getDefaultStatusResolver().checkVersionStatusAndOpenDialog(8, supportFragmentManager, DialogSettings.Builder()
                             .title("My custom title")
                             .messageRes(R.string.update_dialog_message)
                             .positiveButton("Yaay")
@@ -76,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
     private suspend fun checkWithVersion(version: Int) {
         // replace fetcher with some real one
-        getDefaultStatusResolver().checkVersionStatusAndOpenDefault(version, supportFragmentManager)
+        getDefaultStatusResolver().checkVersionStatusAndOpenDialog(version, supportFragmentManager)
     }
 
     private fun getDefaultStatusResolver(minimalVersion: Int = 10, currentVersion: Int = 15): VersionStatusResolver {

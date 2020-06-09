@@ -9,9 +9,6 @@ import kotlinx.coroutines.runBlocking
 
 /**
  * Tests for [VersionStatusResolver]
- *
- * @author David Bilik [david.bilik@ackee.cz]
- * @since 06/02/2017
  */
 class VersionStatusResolverTest {
 

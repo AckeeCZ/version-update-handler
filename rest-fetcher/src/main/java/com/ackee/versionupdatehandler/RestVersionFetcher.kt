@@ -16,16 +16,12 @@ import retrofit2.http.GET
 /**
  * Class that fetches version configuration from rest api
  *
- *
  * Api is specified by base url and is expected to be at address /app_version
- *
- * @author David Bilik [david.bilik@ackee.cz]
- * @since 06/02/2017
  */
 class RestVersionFetcher(
     private val baseUrl: String,
     private val currentAttributeName: String = CURRENT_VERSION,
-    private val minimalAttributeName: String = MINIMAL_VERSION
+    private val minimalAttributeName: String = MINIMAL@_VERSION
 ) : VersionFetcher {
 
     companion object {

@@ -12,9 +12,6 @@ import org.junit.Test
 
 /**
  * Tests for [RestVersionFetcher]
- *
- * @author Eduard Ablekimov [eduard.ablekimov@ackee.cz]
- * @since 09/06/2020
  */
 class RestVersionFetcherTest {
 

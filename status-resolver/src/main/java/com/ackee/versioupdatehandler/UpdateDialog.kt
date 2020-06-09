@@ -87,8 +87,6 @@ class UpdateDialog : DialogFragment() {
 
     /**
      * Open Play Store on application detail
-     *
-     * @param appPackageName package name of application
      */
     private fun openPlayStore(appPackageName: String) {
         try {

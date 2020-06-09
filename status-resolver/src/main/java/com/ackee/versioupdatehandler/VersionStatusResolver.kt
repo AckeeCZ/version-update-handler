@@ -29,16 +29,7 @@ class VersionStatusResolver(private val fetcher: VersionFetcher) {
         return status
     }
     /**
-     * Check for version and show dialog with customized visual settings via [DialogSettings]
-     *
-     * @param version         current version
-     * @param fragmentManager fragment manager used for showing dialog fragment
-     */
-    /**
-     * Check for version and show dialog with default settings
-     *
-     * @param version         current version
-     * @param fragmentManager fragment manager used for showing dialog fragment
+     * Check for version and show dialog with visual settings defined within [DialogSettings]
      */
     suspend fun checkVersionStatusAndOpenDefault(
         version: Int,
@@ -53,8 +44,6 @@ class VersionStatusResolver(private val fetcher: VersionFetcher) {
 
     /**
      * Show dialog with update info
-     *
-     * @param forceUpdate indicator if update is mandatory
      */
     private fun showDialog(
         forceUpdate: Boolean,

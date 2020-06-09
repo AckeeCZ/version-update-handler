@@ -21,7 +21,7 @@ import retrofit2.http.GET
 class RestVersionFetcher(
     private val baseUrl: String,
     private val currentAttributeName: String = CURRENT_VERSION,
-    private val minimalAttributeName: String = MINIMAL@_VERSION
+    private val minimalAttributeName: String = MINIMAL_VERSION
 ) : VersionFetcher {
 
     companion object {

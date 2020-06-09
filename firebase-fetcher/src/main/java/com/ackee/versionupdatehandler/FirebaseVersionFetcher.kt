@@ -9,7 +9,7 @@ import kotlinx.coroutines.tasks.await
 /**
  * Class that fetches version configuration from Firebase Remote.
  */
-class FirebaseVersionFetcher constructor(
+class FirebaseVersionFetcher(
     private val cacheExpiration: Int = 3600,
     private val minimalAttributeName: String = MINIMAL_VERSION,
     private val currentAttributeName: String = CURRENT_VERSION

@@ -22,7 +22,7 @@ import retrofit2.http.GET
  * @author David Bilik [david.bilik@ackee.cz]
  * @since 06/02/2017
  */
-class RestVersionFetcher constructor(
+class RestVersionFetcher(
     private val baseUrl: String,
     private val currentAttributeName: String = CURRENT_VERSION,
     private val minimalAttributeName: String = MINIMAL_VERSION

@@ -12,7 +12,6 @@ import com.ackee.versioupdatehandler.model.DialogSettings
 /**
  * Dialog indicating that user should update application.
  *
- *
  * Texts and package name are customizable via [DialogSettings] class
  */
 class UpdateDialog : DialogFragment() {
@@ -31,45 +30,26 @@ class UpdateDialog : DialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val builder = AlertDialog.Builder(activity!!)
-        val settings: DialogSettings =
-            arguments!!.getParcelable(DIALOG_SETTINGS_KEY) ?: throw IllegalArgumentException("Dialog settings cannot be null")
-        val isForceUpdate = arguments!!.getBoolean(FORCE_UPDATE_KEY, false)
+        val builder = AlertDialog.Builder(requireActivity())
+        val settings = requireArguments().getParcelable<DialogSettings>(DIALOG_SETTINGS_KEY)
+            ?: throw IllegalArgumentException("Dialog settings cannot be null")
+
+        val isForceUpdate = requireArguments().getBoolean(FORCE_UPDATE_KEY, false)
         if (isForceUpdate) {
             isCancelable = false
             builder.setCancelable(false)
         }
-        var title: String? = "Update app"
-        if (settings.title != null) {
-            title = settings.title
-        }
-        if (settings.titleRes > 0) {
-            title = getString(settings.titleRes)
-        }
-        builder.setTitle(title)
-        var message: String? = "Your application is outdated. Please update to the newest version"
-        if (settings.message != null) {
-            message = settings.message
-        }
-        if (settings.messageRes > 0) {
-            message = getString(settings.messageRes)
-        }
-        builder.setMessage(message)
-        var posButton: String? = "Update"
-        if (settings.positiveButton != null) {
-            posButton = settings.positiveButton
-        }
-        if (settings.positiveButtonRes > 0) {
-            posButton = getString(settings.positiveButtonRes)
-        }
-        builder.setPositiveButton(posButton) { _, _ ->
-            if (isForceUpdate) {
-                activity!!.finish()
-            }
-            val appPackageName =
-                if (settings.packageName == null) activity!!.packageName else settings.packageName // getPackageName() from Context or Activity object
-            appPackageName?.let { openPlayStore(it) }
-        }
+
+        setupTitle(settings, builder)
+        setupMessage(settings, builder)
+        setupPositiveButton(settings, builder, isForceUpdate)
+        setupNegativeButton(settings, builder, isForceUpdate)
+
+        return builder.create()
+    }
+
+    private fun setupNegativeButton(settings: DialogSettings, builder: AlertDialog.Builder,
+        isForceUpdate: Boolean) {
         var negButton: String? = "Cancel"
         if (settings.negativeButton != null) {
             negButton = settings.negativeButton
@@ -79,10 +59,50 @@ class UpdateDialog : DialogFragment() {
         }
         builder.setNegativeButton(negButton) { _, _ ->
             if (isForceUpdate) {
-                activity!!.moveTaskToBack(true)
+                requireActivity().moveTaskToBack(true)
             }
         }
-        return builder.create()
+    }
+
+    private fun setupPositiveButton(settings: DialogSettings, builder: AlertDialog.Builder,
+        isForceUpdate: Boolean) {
+        var posButton: String? = "Update"
+        if (settings.positiveButton != null) {
+            posButton = settings.positiveButton
+        }
+        if (settings.positiveButtonRes > 0) {
+            posButton = getString(settings.positiveButtonRes)
+        }
+        builder.setPositiveButton(posButton) { _, _ ->
+            if (isForceUpdate) {
+                requireActivity().finish()
+            }
+            // getPackageName() from Context or Activity object
+            val appPackageName = if (settings.packageName == null) requireActivity().packageName else settings.packageName
+            appPackageName?.let { openPlayStore(it) }
+        }
+    }
+
+    private fun setupMessage(settings: DialogSettings, builder: AlertDialog.Builder) {
+        var message: String? = "Your application is outdated. Please update to the newest version"
+        if (settings.message != null) {
+            message = settings.message
+        }
+        if (settings.messageRes > 0) {
+            message = getString(settings.messageRes)
+        }
+        builder.setMessage(message)
+    }
+
+    private fun setupTitle(settings: DialogSettings, builder: AlertDialog.Builder) {
+        var title: String? = "Update app"
+        if (settings.title != null) {
+            title = settings.title
+        }
+        if (settings.titleRes > 0) {
+            title = getString(settings.titleRes)
+        }
+        builder.setTitle(title)
     }
 
     /**

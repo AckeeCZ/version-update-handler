@@ -1,14 +1,17 @@
 package com.ackee.versionupdatehandler.setup
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.ackee.versionupdatehandler.R
+import com.ackee.versioupdatehandler.VersionFetcher
 import com.ackee.versioupdatehandler.VersionStatusResolver
 import com.ackee.versioupdatehandler.model.BasicVersionsConfiguration
 import com.ackee.versioupdatehandler.model.DialogSettings
 import com.ackee.versioupdatehandler.model.VersionStatus
-import io.reactivex.Single
+import com.ackee.versioupdatehandler.model.VersionsConfiguration
 import org.jetbrains.anko.*
+import org.jetbrains.anko.sdk21.coroutines.onClick
 import java.util.Random
 
 /**
@@ -16,6 +19,7 @@ import java.util.Random
  */
 class MainActivity : AppCompatActivity() {
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         scrollView {
@@ -23,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                 padding = dip(16)
                 button {
                     text = "Not mandatory update"
-                    setOnClickListener {
+                    onClick {
                         checkWithVersion(13)
                     }
                 }.lparams(width = matchParent) {
@@ -32,7 +36,7 @@ class MainActivity : AppCompatActivity() {
 
                 button {
                     text = "Mandatory update"
-                    setOnClickListener {
+                    onClick {
                         checkWithVersion(8)
                     }
                 }.lparams(width = matchParent) {
@@ -41,15 +45,13 @@ class MainActivity : AppCompatActivity() {
 
                 button {
                     text = "Customized dialog"
-                    setOnClickListener {
-                        VersionStatusResolver({
-                            Single.just(BasicVersionsConfiguration(10, 15))
-                        }).checkVersionStatusAndOpenDefault(8, supportFragmentManager, DialogSettings.Builder()
-                                .title("My custom title")
-                                .messageRes(R.string.update_dialog_message)
-                                .positiveButton("Yaay")
-                                .negativeButton("Never")
-                                .build()
+                    onClick {
+                        getDefaultStatusResolver().checkVersionStatusAndOpenDefault(8, supportFragmentManager, DialogSettings.Builder()
+                            .title("My custom title")
+                            .messageRes(R.string.update_dialog_message)
+                            .positiveButton("Yaay")
+                            .negativeButton("Never")
+                            .build()
                         )
                     }
                 }.lparams(width = matchParent) {
@@ -58,16 +60,12 @@ class MainActivity : AppCompatActivity() {
 
                 button {
                     text = "Custom UI"
-                    setOnClickListener {
-                        VersionStatusResolver({
-                            Single.just(BasicVersionsConfiguration(10, 15))
-                        }).checkVersionStatus(if (Random().nextInt() % 2 == 0) 8 else 12)
-                                .subscribe({
-                                    when (it) {
-                                        VersionStatus.UPDATE_AVAILABLE -> toast("Update is available")
-                                        VersionStatus.UPDATE_REQUIRED -> toast("Mandatory update is available")
-                                    }
-                                }, Throwable::printStackTrace)
+                    onClick {
+                        when (getDefaultStatusResolver().checkVersionStatus(if (Random().nextInt() % 2 == 0) 8 else 12)) {
+                            VersionStatus.UPDATE_AVAILABLE -> toast("Update is available")
+                            VersionStatus.UPDATE_REQUIRED -> toast("Mandatory update is available")
+                            VersionStatus.UP_TO_DATE -> toast("Up to date")
+                        }
                     }
                 }.lparams(width = matchParent) {
                     bottomMargin = dip(16)
@@ -76,10 +74,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkWithVersion(version: Int) {
+    private suspend fun checkWithVersion(version: Int) {
         // replace fetcher with some real one
-        VersionStatusResolver({
-            Single.just(BasicVersionsConfiguration(10, 15))
-        }).checkVersionStatusAndOpenDefault(version, supportFragmentManager)
+        getDefaultStatusResolver().checkVersionStatusAndOpenDefault(version, supportFragmentManager)
+    }
+
+    private fun getDefaultStatusResolver(minimalVersion: Int = 10, currentVersion: Int = 15): VersionStatusResolver {
+        return VersionStatusResolver(object : VersionFetcher {
+            override suspend fun fetch(): VersionsConfiguration {
+                return BasicVersionsConfiguration(10, 15)
+            }
+        })
     }
 }

@@ -44,6 +44,7 @@ dependencies {
 
     // Anko
     implementation "org.jetbrains.anko:anko-sdk15:$ankoVersion" // So here it's 15 too
+    implementation "org.jetbrains.anko:anko-sdk21-coroutines:$ankoVersion"
 
     // Anko libs matching support libs
     implementation "org.jetbrains.anko:anko-appcompat-v7:${ankoVersion}"

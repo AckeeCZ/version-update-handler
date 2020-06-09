@@ -3,7 +3,7 @@ package com.ackee.versioupdatehandler.model
 /**
  * Basic class for versions configuration.
  */
-class BasicVersionsConfiguration(
+open class BasicVersionsConfiguration(
     private val minimalVersion: Long,
     private val currentVersion: Long
 ) : VersionsConfiguration {
@@ -20,3 +20,5 @@ class BasicVersionsConfiguration(
         return currentVersion
     }
 }
+
+object DefaultVersionsConfiguration : BasicVersionsConfiguration(-1, -1)

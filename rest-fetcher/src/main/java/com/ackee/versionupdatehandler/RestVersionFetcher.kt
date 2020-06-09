@@ -41,9 +41,7 @@ class RestVersionFetcher(
                     .baseUrl(baseUrl)
                     .addConverterFactory(
                         GsonConverterFactory.create(GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()))
-                    .client(OkHttpClient.Builder()
-                        .addNetworkInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-                        .build())
+                    .client(OkHttpClient.Builder().build())
                     .build()
                     .create(ApiDescription::class.java)
             }

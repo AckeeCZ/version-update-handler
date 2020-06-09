@@ -63,8 +63,4 @@ class VersionStatusResolver(private val fetcher: VersionFetcher) {
     ) {
         UpdateDialog.newInstance(forceUpdate, dialogSettings).show(fragmentManager, UpdateDialog::class.java.name)
     }
-
-    companion object {
-        val TAG = VersionStatusResolver::class.java.name
-    }
 }

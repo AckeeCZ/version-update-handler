@@ -17,6 +17,19 @@ import com.ackee.versioupdatehandler.model.DialogSettings
  */
 class UpdateDialog : DialogFragment() {
 
+    companion object {
+        private const val FORCE_UPDATE_KEY = "force_update"
+        private const val DIALOG_SETTINGS_KEY = "dialog_settings"
+        fun newInstance(forceUpdate: Boolean, dialogSettings: DialogSettings?): UpdateDialog {
+            val args = Bundle()
+            args.putBoolean(FORCE_UPDATE_KEY, forceUpdate)
+            args.putParcelable(DIALOG_SETTINGS_KEY, dialogSettings)
+            val updateDialog = UpdateDialog()
+            updateDialog.arguments = args
+            return updateDialog
+        }
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(activity!!)
         val settings: DialogSettings =
@@ -82,19 +95,6 @@ class UpdateDialog : DialogFragment() {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
         } catch (anfe: ActivityNotFoundException) {
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
-        }
-    }
-
-    companion object {
-        private const val FORCE_UPDATE_KEY = "force_update"
-        private const val DIALOG_SETTINGS_KEY = "dialog_settings"
-        fun newInstance(forceUpdate: Boolean, dialogSettings: DialogSettings?): UpdateDialog {
-            val args = Bundle()
-            args.putBoolean(FORCE_UPDATE_KEY, forceUpdate)
-            args.putParcelable(DIALOG_SETTINGS_KEY, dialogSettings)
-            val updateDialog = UpdateDialog()
-            updateDialog.arguments = args
-            return updateDialog
         }
     }
 }

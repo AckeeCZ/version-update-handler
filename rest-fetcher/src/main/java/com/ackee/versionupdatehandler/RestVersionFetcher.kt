@@ -28,6 +28,11 @@ class RestVersionFetcher constructor(
     private val minimalAttributeName: String = MINIMAL_VERSION
 ) : VersionFetcher {
 
+    companion object {
+        const val MINIMAL_VERSION = "minimal_version_android"
+        const val CURRENT_VERSION = "current_version_android"
+    }
+
     internal interface ApiDescription {
         @GET("app_version")
         suspend fun versions(): JsonObject?
@@ -59,12 +64,6 @@ class RestVersionFetcher constructor(
             val currentVersion = if (has(currentAttributeName)) get(currentAttributeName).asLong else -1
             BasicVersionsConfiguration(minimalVersion, currentVersion)
         }
-    }
-
-    companion object {
-        val TAG = RestVersionFetcher::class.java.name
-        const val MINIMAL_VERSION = "minimal_version_android"
-        const val CURRENT_VERSION = "current_version_android"
     }
 }
 

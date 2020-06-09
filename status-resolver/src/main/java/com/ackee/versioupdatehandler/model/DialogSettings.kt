@@ -8,19 +8,6 @@ import android.os.Parcelable
  */
 class DialogSettings : Parcelable {
 
-    companion object {
-        val TAG = DialogSettings::class.java.name
-        val CREATOR: Parcelable.Creator<DialogSettings> = object : Parcelable.Creator<DialogSettings> {
-            override fun createFromParcel(parcelableValue: Parcel): DialogSettings? {
-                return DialogSettings(parcelableValue)
-            }
-
-            override fun newArray(size: Int): Array<DialogSettings?> {
-                return arrayOfNulls(size)
-            }
-        }
-    }
-
     var packageName: String?
     var title: String?
     var titleRes: Int

@@ -8,10 +8,6 @@ open class BasicVersionsConfiguration(
     private val currentVersion: Long
 ) : VersionsConfiguration {
 
-    companion object {
-        val TAG = BasicVersionsConfiguration::class.java.name
-    }
-
     override fun minimalVersion(): Long {
         return minimalVersion
     }

@@ -7,9 +7,5 @@ import com.ackee.versioupdatehandler.model.VersionsConfiguration
  */
 interface VersionFetcher {
 
-    companion object {
-        val TAG = VersionFetcher::class.java.name
-    }
-
     suspend fun fetch(): VersionsConfiguration
 }

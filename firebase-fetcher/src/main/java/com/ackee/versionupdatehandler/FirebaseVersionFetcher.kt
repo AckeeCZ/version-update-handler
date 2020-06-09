@@ -15,6 +15,18 @@ class FirebaseVersionFetcher constructor(
     private val currentAttributeName: String = CURRENT_VERSION
 ) : VersionFetcher {
 
+    companion object {
+        const val MINIMAL_VERSION = "minimal_version_android"
+        const val CURRENT_VERSION = "current_version_android"
+
+        val DEFAULTS: Map<String, Any> by lazy {
+            mapOf(
+                MINIMAL_VERSION to -1,
+                CURRENT_VERSION to -1
+            )
+        }
+    }
+
     override suspend fun fetch(): VersionsConfiguration {
         val remoteConfig = FirebaseRemoteConfig.getInstance().apply {
             setDefaultsAsync(DEFAULTS)
@@ -26,17 +38,5 @@ class FirebaseVersionFetcher constructor(
         val minimalVersion = remoteConfig.getLong(minimalAttributeName)
         val currentVersion = remoteConfig.getLong(currentAttributeName)
         return BasicVersionsConfiguration(minimalVersion, currentVersion)
-    }
-
-    companion object {
-        const val MINIMAL_VERSION = "minimal_version_android"
-        const val CURRENT_VERSION = "current_version_android"
-
-        val DEFAULTS: Map<String, Any> by lazy {
-            mapOf(
-                MINIMAL_VERSION to -1,
-                CURRENT_VERSION to -1
-            )
-        }
     }
 }

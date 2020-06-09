@@ -18,6 +18,11 @@ import org.junit.Test
  */
 class RestVersionFetcherTest {
 
+    companion object {
+        const val MINIMAL_VERSION = "minimal_version_android"
+        const val CURRENT_VERSION = "current_version_android"
+    }
+
     private lateinit var server: MockWebServer
 
     @Before
@@ -85,10 +90,5 @@ class RestVersionFetcherTest {
             .isEqualTo(-1)
         Truth.assertThat(result.minimalVersion())
             .isEqualTo(10)
-    }
-
-    companion object {
-        const val MINIMAL_VERSION = "minimal_version_android"
-        const val CURRENT_VERSION = "current_version_android"
     }
 }

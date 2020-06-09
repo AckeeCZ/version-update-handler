@@ -15,6 +15,10 @@ import kotlinx.coroutines.runBlocking
  */
 class VersionStatusResolverTest {
 
+    companion object {
+        val BASIC_VERSIONS_CONFIGURATION = BasicVersionsConfiguration(10, 15)
+    }
+
     @Test
     fun should_be_up_to_date_greater_than_last() {
         checkSuccess(15, VersionStatus.UP_TO_DATE)
@@ -44,9 +48,5 @@ class VersionStatusResolverTest {
         val versionStatus = resolver.checkVersionStatus(actualVersion)
         Truth.assertThat(versionStatus)
             .isEqualTo(expectedResult)
-    }
-
-    companion object {
-        val BASIC_VERSIONS_CONFIGURATION = BasicVersionsConfiguration(10, 15)
     }
 }

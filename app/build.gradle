@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion Config.compileSdk
 
     defaultConfig {
         applicationId "com.ackee.versionupdatehandler"
-        minSdkVersion 15
-        targetSdkVersion 29
+        minSdkVersion Config.minSdk
+        targetSdkVersion Config.targetSdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -29,24 +29,18 @@ android {
     }
 }
 
-ext {
-    ankoVersion = "0.10.8"
-}
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation project(':status-resolver')
+
+    implementation Dependencies.androidXAppCompat
+    implementation Dependencies.kotlinStdLib
+    implementation Dependencies.ankoSdk15
+    implementation Dependencies.ankoSdk21Coroutines
+    implementation Dependencies.ankoAppcompat
+
+    testImplementation Dependencies.jUnit
     androidTestImplementation('androidx.test.espresso:espresso-core:3.1.0', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-
-    // Anko
-    implementation "org.jetbrains.anko:anko-sdk15:$ankoVersion" // So here it's 15 too
-
-    // Anko libs matching support libs
-    implementation "org.jetbrains.anko:anko-appcompat-v7:${ankoVersion}"
-
-    implementation project(':status-resolver')
 }

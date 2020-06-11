@@ -3,16 +3,16 @@
 # Android Version Status Resolver and Fetcher
 
 ## Purpose of library
-Many applications have need to tell their users to update current application because they have outdated version. Google Play doesnt support any API for that so we need to use custom solution.  This library will compare current application version number to the versions that are stored in remote locations (Api request/Firebase Remote Config, ...) and show the dialog to the user with prompt to update their app.
+Many applications have need to tell their users to update current application because they have outdated version. Google Play doesn't support any API for that so we need to use custom solution.  This library will compare current application version number to the versions that are stored in remote locations (Api request/Firebase Remote Config, ...) and show the dialog to the user with prompt to update their app.
 
 
-This library is based on RxJava2
+This library is based on Kotlin Coroutines
 ## Usage
 The simplest way for use this library is
 ```kotlin
  val versionFetcher = ...
  val versionResolver = VersionStatusResolver(versionFetcher)
- versionResolver.checkVersionStatusAndShowDefault(BuildConfig.VERSION_CODE, getSupportFragmentManager())
+ versionResolver.checkVersionStatusAndOpenDialog(BuildConfig.VERSION_CODE, getSupportFragmentManager())
 ```
 
 this will check versions and show update dialog with default texts. If you want to modify strings in dialog and maybe package name, you can via DialogSettings.Builder() class.
@@ -20,7 +20,7 @@ this will check versions and show update dialog with default texts. If you want 
 ```kotlin
  val versionFetcher = ...
  val versionResolver = VersionStatusResolver(versionFetcher)
- versionResolver.checkVersionStatusAndShowDefault(BuildConfig.VERSION_CODE, getSupportFragmentManager(),
+ versionResolver.checkVersionStatusAndOpenDialog(BuildConfig.VERSION_CODE, getSupportFragmentManager(),
                             DialogSettings.Builder()
                             .title("My custom title")
                             .messageRes(R.string.update_dialog_message)

@@ -33,7 +33,7 @@ class RestVersionFetcher(
         suspend fun versions(): JsonObject?
     }
 
-    private val api: ApiDescription? by lazy {
+    private val api: ApiDescription by lazy {
         Retrofit.Builder()
             .baseUrl(baseUrl)
             .addConverterFactory(
@@ -44,7 +44,7 @@ class RestVersionFetcher(
     }
 
     override suspend fun fetch(): VersionsConfiguration {
-        return api?.versions()?.map() ?: DefaultVersionsConfiguration
+        return api.versions()?.map() ?: DefaultVersionsConfiguration
     }
 
     private fun JsonObject.map(): BasicVersionsConfiguration {

@@ -58,6 +58,10 @@ Class `FirebaseVersionFetcher` takes optional argument for cache expiration of f
 ```groovy
 implementation "cz.ackee.updatechecker:firebase-fetcher:x.x.x"
 ```
+Besides that, you need to add a dependency to the Firebase Remote Config since it is not transitive.
+```groovy
+implementation "com.google.firebase:firebase-config:x.x.x"
+```
 
 
 ### Rest Api

@@ -21,7 +21,9 @@ android {
 dependencies {
     implementation project(':status-resolver')
 
-    implementation Dependencies.firebaseConfig
+    implementation(Dependencies.firebaseConfig) {
+        setTransitive(false)
+    }
     implementation Dependencies.coreKtx
     implementation Dependencies.kotlinStdLibJdk7
     implementation Dependencies.kotlinCoroutinesPlayServices

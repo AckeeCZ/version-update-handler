@@ -22,6 +22,6 @@ jobs:
       
     - name: Publish To Bintray
       env:
-        bintrayUsername: ${{ secrets.BINTRAY_USER }}
+        bintrayUsername: ${{ secrets.BINTRAY_NAME }}
         bintrayApiKey: ${{ secrets.BINTRAY_API_KEY }}
       run: ./gradlew bintrayUpload

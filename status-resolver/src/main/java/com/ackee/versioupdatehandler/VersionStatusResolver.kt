@@ -1,6 +1,5 @@
 package com.ackee.versioupdatehandler
 
-import android.util.Log
 import androidx.fragment.app.FragmentManager
 import com.ackee.versioupdatehandler.model.DialogSettings
 import com.ackee.versioupdatehandler.model.VersionStatus
@@ -12,11 +11,15 @@ import com.ackee.versioupdatehandler.model.VersionsConfiguration
 class VersionStatusResolver(private val fetcher: VersionFetcher) {
 
     suspend fun checkVersionStatus(version: Int): VersionStatus {
+        return checkVersionStatus(version.toLong())
+    }
+
+    suspend fun checkVersionStatus(version: Long): VersionStatus {
         val versionConfig = fetcher.fetch()
         return resolveStatus(version, versionConfig)
     }
 
-    private fun resolveStatus(version: Int, configuration: VersionsConfiguration): VersionStatus {
+    private fun resolveStatus(version: Long, configuration: VersionsConfiguration): VersionStatus {
         var status = VersionStatus.UP_TO_DATE
         if (version < configuration.minimalVersion()) {
             status = VersionStatus.UPDATE_REQUIRED

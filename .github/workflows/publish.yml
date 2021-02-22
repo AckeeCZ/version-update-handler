@@ -1,9 +1,9 @@
 name: Publish Bintray
 
 on:
-  create:
+  push:
     tags:
-      - v*
+      - '*'
     
 jobs:
   build:

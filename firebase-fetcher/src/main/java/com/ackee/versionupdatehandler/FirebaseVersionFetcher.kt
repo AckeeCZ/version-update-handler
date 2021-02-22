@@ -31,8 +31,7 @@ class FirebaseVersionFetcher(
         val remoteConfig = FirebaseRemoteConfig.getInstance().apply {
             setDefaultsAsync(DEFAULTS)
         }
-        val isDevMode = FirebaseRemoteConfig.getInstance().info.configSettings.isDeveloperModeEnabled
-        remoteConfig.fetch((if (isDevMode) 0 else cacheExpiration).toLong()).await()
+        remoteConfig.fetch(cacheExpiration.toLong()).await()
         remoteConfig.activate().await()
 
         val minimalVersion = remoteConfig.getLong(minimalAttributeName)

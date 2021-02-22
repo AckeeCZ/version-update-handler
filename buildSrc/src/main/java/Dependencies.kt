@@ -25,7 +25,7 @@ object Dependencies {
     const val coreKtx = "androidx.core:core-ktx:$coreKtxVersion"
 
     // Firebase
-    private const val firebaseConfigVersion = "19.1.4"
+    private const val firebaseConfigVersion = "20.0.3"
     const val firebaseConfig = "com.google.firebase:firebase-config:$firebaseConfigVersion"
 
     // Retrofit

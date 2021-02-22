@@ -32,11 +32,22 @@ artifacts {
 
 // Bintray
 Properties properties = new Properties()
-properties.load(project.rootProject.file('local.properties').newDataInputStream())
+def bintrayUser
+def bintrayApiKey
+
+// Use local.properties if uploading manually or github secrets if uploading via CI
+if (project.rootProject.file('local.properties').exists()) {
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    bintrayUser = properties.getProperty("bintray.user")
+    bintrayApiKey = properties.getProperty("bintray.apikey")
+} else {
+    bintrayUser = System.getenv("bintrayUsername")
+    bintrayApiKey = System.getenv("bintrayApiKey")
+}
 
 bintray {
-    user = System.getenv("bintrayUsername")
-    key = System.getenv("bintrayApiKey")
+    user = bintrayUser
+    key = bintrayApiKey
 
     configurations = ['archives']
     pkg {

@@ -17,19 +17,10 @@ class FirebaseVersionFetcher(
     companion object {
         const val MINIMAL_VERSION = "minimal_version_android"
         const val CURRENT_VERSION = "current_version_android"
-
-        val DEFAULTS: Map<String, Any> by lazy {
-            mapOf(
-                MINIMAL_VERSION to -1,
-                CURRENT_VERSION to -1
-            )
-        }
     }
 
     override suspend fun fetch(): VersionsConfiguration {
-        val remoteConfig = FirebaseRemoteConfig.getInstance().apply {
-            setDefaultsAsync(DEFAULTS)
-        }
+        val remoteConfig = FirebaseRemoteConfig.getInstance()
         remoteConfig.fetch(cacheExpiration.toLong()).await()
         remoteConfig.activate().await()
 

@@ -31,7 +31,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(':status-resolver')
+    implementation project(':updatechecker-status-resolver')
 
     implementation Dependencies.androidXAppCompat
     implementation Dependencies.kotlinStdLib

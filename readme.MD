@@ -61,7 +61,7 @@ Class `FirebaseVersionFetcher` takes optional argument for cache expiration of f
 Default names of attributes are `minimal_version_android` and `current_version_android` but you can modify that with constructor attributes.
 
 ```groovy
-implementation "cz.ackee.updatechecker:firebase-fetcher:x.x.x"
+implementation "io.github.ackeecz:updatechecker-firebase-fetcher:x.x.x"
 ```
 
 Besides that, you need to add a dependency to the Firebase Remote Config since it is not transitive.
@@ -76,14 +76,14 @@ Class `RestVersionFetcher` accepts as argument base url of server. On url GET ${
 response with attributes  `minimal_version_android` and `current_version_android` (names can be also modified)
 
 ```groovy
-compile "cz.ackee.updatechecker:rest-fetcher:x.x.x"
+compile "io.github.ackeecz:updatechecker-rest-fetcher:x.x.x"
 ```
 
 ## Dependencies
-For current version check `gradle.properties` file
+For current version check `lib.properties` file
 
 ```groovy
-compile "cz.ackee.updatechecker:status-resolver:x.x.x"
+compile "io.github.ackeecz:updatechecker-status-resolver:x.x.x"
 ```
 
 ### Sample

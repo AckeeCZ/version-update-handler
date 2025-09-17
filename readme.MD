@@ -1,3 +1,6 @@
+# DEPRECATED
+This library is no longer maintained and repository is archived.
+
 [ ![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.ackeecz/updatechecker-status-resolver/badge.svg)](https://maven-badges.herokuapp.com/maven-central/io.github.ackeecz/updatechecker-status-resolver)
 
 # Android Version Status Resolver and Fetcher
